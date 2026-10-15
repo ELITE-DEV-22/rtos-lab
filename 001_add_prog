@@ -1,0 +1,80 @@
+// LAB 1: 
+
+// 001_add_lab: 
+
+// 1. Add.c: 
+ 
+int main(void){
+    int a = 10, b = 20;
+    int c = a+b;
+    return 0;
+}
+
+//2. condition.c
+int main (void) {
+    int a = 5, 
+    int b = 10;
+    if(a == b)
+        a = a+10;
+    b = a;
+}
+
+//3. for-cond.c
+int main (void){
+    int sum = 0;
+    for (int i = 0; i <= 10; i++){
+        sum += 1;
+    }
+    return 0;
+}
+
+//4. rec-sum.c
+int rec_sum(int i){
+    if (i <= 1){
+        return 1;
+    }
+    else{
+        return i + rec_sum(i-1);
+    }
+}
+int main (void){
+    int sum = 0;
+    sum = rec_sum(sum);
+    return 0;
+}
+
+//5.while.c
+int main (void){
+
+	int sum = 0;
+	int i = 1;
+	while ( i <= 10 ){
+
+		sum+=i;
+		i++;
+	}
+	return 0;
+}
+
+// steps to run:
+Step 1: Check whether the ARM compiler is installed
+arm-none-eabi-gcc --version
+arm-none-eabi-objdump --version
+
+If missing:
+sudo apt update
+sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi
+
+Step 2: Create the c file from terminal
+mkdir asm-practice
+cd asm-practice
+nano main.c -> paste code
+Save and exit Nano: Ctrl + O → Enter → Ctrl + X.
+
+Step 3: Compile for the STM32 Blue Pill
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -O0 -g -c main.c -o main.o
+This generates the ARM object file, main.o.
+
+
+Step 4: Generate the disassembly
+arm-none-eabi-objdump -d -S main.o

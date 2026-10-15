@@ -1,0 +1,37 @@
+cd folder
+
+Command 1: Compile the C file
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -O0 -g -c add_prog.c -o add_prog.o
+
+Command 2: Assemble the startup file
+arm-none-eabi-as -mcpu=cortex-m3 -mthumb startup_stm32f103.s -o startup.o
+
+Command 3: Link the object files
+arm-none-eabi-ld -T STM32F103C8.ld add_prog.o startup.o -o firmware.elf
+
+Command 4: Convert ELF into binary
+arm-none-eabi-objcopy -O binary firmware.elf firmware.bin
+
+Step 3 - Flash the firmware onto the Blue Pill
+st-flash write firmware.bin 0x08000000
+
+
+5. Step 4 — Start the debugging server
+Open Terminal 1 and run:
+st-util
+
+Now open Terminal 2 in the same project folder.
+Start GDB:
+gdb-multiarch firmware.elf
+
+Step 5 — Execute these commands inside GDB
+Once you see the (gdb) prompt, enter the following commands one at a time.
+A. Connect to the board
+target extended-remote :4242
+
+set disassemble-next-line on
+display/i $pc
+display $sp
+display/x $r7
+display/8xw $sp
+display/x $lr
